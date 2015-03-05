@@ -28,7 +28,7 @@ task "rspec-rerun:spec" do |t, args|
   Rake::Task["rspec-rerun:run"].execute(parsed_args)
   while !$?.success? && retry_count > 0
     retry_count -= 1
-    failed_count = File.read(RSpec::Rerun::Formatters::FailuresFormatter::FILENAME).split(/\n+/).count
+    failed_count = File.read(RSpec::Rerun::Formatters::FailuresFormatter::FILENAME).split(/\n+/).count rescue 0
     msg = "[#{Time.now}] Failed, re-running #{failed_count} failure#{failed_count == 1 ? '' : 's'}"
     msg += ", #{retry_count} #{retry_count == 1 ? 'retry' : 'retries'} left" if retry_count > 0
     $stderr.puts "#{msg} ..."
